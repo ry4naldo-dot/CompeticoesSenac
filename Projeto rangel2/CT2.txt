@@ -1,0 +1,55 @@
+create table clientes(
+  id int primary key auto_increment,
+  nome_completo varchar(255) not null,
+  cpf varchar(11) not null,
+  email varchar(100) not null,
+  vinculo enum('Aluno','Funcionario','Visitante'),
+  data_criacao timestamp default current_timestamp,
+  data_atualizada timestamp default current_timestamp on update current_timestamp
+);
+
+create table financeiro(
+  id int primary key auto_increment,
+  valor decimal(8,2),
+  id_cliente int not null,
+  foreign key (id_cliente) references clientes(id),
+  data_lancamento timestamp default current_timestamp,
+  data_modificacao timestamp default current_timestamp on update current_timestamp,
+  status enum('Pago','Pendente')
+);
+
+-- select * from clientes;
+-- select * from financeiro;
+
+-- drop table clientes;
+-- drop table financeiro;
+
+INSERT INTO clientes (nome_completo, cpf, email, vinculo, id_usuario)
+VALUES
+('Felipe Leandro Machado','11111111111','perigo@email.com','Aluno','1'),
+('Pedro Borges Posto shell','22222222222','pedro@email.com','Aluno',1),
+('Ryan Gabriel da Rosa','3333333333','ryan@email.com','Aluno','1'),
+('Marcos einecke','4444444444','marcos@email.com','Aluno',1);
+
+INSERT INTO financeiro (valor, id_cliente, status)
+VALUES
+('80.67','1','Pendente'),
+('12','2','Pago'),
+('8','3','Pago'),
+('12','4','Pendente');
+
+update financeiro set status = 'Pago' where id_cliente = 4;
+
+-- Vendas
+select count(id) as Total_de_Vendas from financeiro;
+
+-- Total valor dos pedidos
+select sum(valor) as Total_valor from financeiro;
+
+-- Pagamentos já recebidos
+select * from financeiro where status = 'Pago';
+
+-- Pagamentos para receber
+select * from financeiro where status = 'Pendente';
+
+
