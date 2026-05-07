@@ -2,13 +2,13 @@ create table usuario(
   id int primary key auto_increment,
   nome varchar(100) not null,
   email varchar(100) not null,
-  cpf varchar(11) not null
+  cpf varchar(11) not null unique
 );
 
 create table clientes(
   id int primary key auto_increment,
   nome_completo varchar(255) not null,
-  cpf varchar(11) not null,
+  cpf varchar(11) not null unique,
   email varchar(100) not null,
   vinculo enum('Aluno','Funcionario','Visitante'),
   data_criacao timestamp default current_timestamp,
